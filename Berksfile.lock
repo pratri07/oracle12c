@@ -1,0 +1,7 @@
+DEPENDENCIES
+  oracle
+    path: .
+    metadata: true
+
+GRAPH
+  oracle (0.1.0)

@@ -1,0 +1,16 @@
+ulimit -S -c unlimited > /dev/null 2>&1
+
+EDITOR=/bin/vi
+ORACLE_BASE=<%= node[:oracle][:ora_base] %>
+ORACLE_HOME=<%= node[:oracle][:rdbms][:ora_home] %>
+ORACLE_SID=
+ORACLE_UNQNAME=
+ORACLE_HOSTNAME=`hostname -f`
+export EDITOR ORACLE_BASE ORACLE_HOME ORACLE_SID ORACLE_HOSTNAME
+
+NLS_DATE_FORMAT='YYYYMMDD.HH24MISS'
+NLS_LANG=american_america.al32utf8
+export NLS_DATE_FORMAT NLS_LANG
+
+PATH=$PATH:/usr/sbin:$ORACLE_BASE/dba/bin:$ORACLE_HOME/bin:$ORACLE_HOME/OPatch
+export PATH
