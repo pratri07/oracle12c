@@ -1,0 +1,30 @@
+startup nomount pfile=init<%= node[:oracle][:rdbms][:dbs] %>.ora;
+CREATE DATABASE <%= node[:oracle][:rdbms][:dbs] %>
+   USER SYS IDENTIFIED BY <%= node[:oracle][:rdbms][:sys_pw] %>
+   USER SYSTEM IDENTIFIED BY <%= node[:oracle][:rdbms][:system_pw] %>
+   LOGFILE GROUP 1 ('/oradata/<%= node[:oracle][:rdbms][:dbs] %>/redo01a.log','/oradata/<%= node[:oracle][:rdbms][:dbs] %>/redo01b.log') SIZE 100M BLOCKSIZE 512,
+           GROUP 2 ('/oradata/<%= node[:oracle][:rdbms][:dbs] %>/redo02a.log','/oradata/<%= node[:oracle][:rdbms][:dbs] %>/redo02b.log') SIZE 100M BLOCKSIZE 512,
+           GROUP 3 ('/oradata/<%= node[:oracle][:rdbms][:dbs] %>/redo03a.log','/oradata/<%= node[:oracle][:rdbms][:dbs] %>/redo03b.log') SIZE 100M BLOCKSIZE 512
+   MAXLOGHISTORY 1
+   MAXLOGFILES 16
+   MAXLOGMEMBERS 3
+   MAXDATAFILES 1024
+   CHARACTER SET AL32UTF8
+   NATIONAL CHARACTER SET AL16UTF16
+   EXTENT MANAGEMENT LOCAL
+   DATAFILE '/oradata/<%= node[:oracle][:rdbms][:dbs] %>/system01.dbf'
+     SIZE 700M REUSE AUTOEXTEND ON NEXT 10240K MAXSIZE UNLIMITED
+   SYSAUX DATAFILE '/oradata/<%= node[:oracle][:rdbms][:dbs] %>/sysaux01.dbf'
+     SIZE 550M REUSE AUTOEXTEND ON NEXT 10240K MAXSIZE UNLIMITED
+   DEFAULT TABLESPACE users
+      DATAFILE '/oradata/<%= node[:oracle][:rdbms][:dbs] %>/users01.dbf'
+      SIZE 500M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED
+   DEFAULT TEMPORARY TABLESPACE tempts1
+      TEMPFILE '/oradata/<%= node[:oracle][:rdbms][:dbs] %>/temp01.dbf'
+      SIZE 20M REUSE AUTOEXTEND ON NEXT 640K MAXSIZE UNLIMITED
+   UNDO TABLESPACE undotbs1
+      DATAFILE '/oradata/<%= node[:oracle][:rdbms][:dbs] %>/undotbs01.dbf'
+      SIZE 200M REUSE AUTOEXTEND ON NEXT 5120K MAXSIZE UNLIMITED
+   USER_DATA TABLESPACE usertbs
+      DATAFILE '/oradata/<%= node[:oracle][:rdbms][:dbs] %>/usertbs01.dbf'
+      SIZE 200M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;

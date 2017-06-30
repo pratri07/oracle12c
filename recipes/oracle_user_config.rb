@@ -18,7 +18,7 @@ template "/home/oracle/.profile" do
   source 'ora_profile.erb'
   owner 'oracle'
   group 'dba'
-end 
+end
 
 cookbook_file '/etc/security/limits.d/oracle.conf' do
   mode '0644'

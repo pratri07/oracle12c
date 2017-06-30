@@ -1,5 +1,8 @@
-bash 'sysctl_reload' do
-  code 'source /etc/init.d/functions && apply_sysctl'
+execute 'sysctl_reload' do
+  command <<-COMMAND
+    source /etc/init.d/functions
+    apply_sysctl
+  COMMAND
   action :nothing
 end
 
@@ -9,5 +12,5 @@ end
 
 cookbook_file '/etc/sysctl.d/ora_params' do
   mode '0644'
-  notifies :run, 'bash[sysctl_reload]', :immediately
+  notifies :run, 'execute[sysctl_reload]', :immediately
 end
