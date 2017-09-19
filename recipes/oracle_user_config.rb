@@ -13,7 +13,14 @@ end
 
 yum_package File.basename(node[:oracle][:user][:shell])
 
-template "/home/oracle/.profile" do
+#template "/home/oracle/.profile" do
+#  action :create_if_missing
+#  source 'ora_profile.erb'
+#  owner 'oracle'
+#  group 'dba'
+#end
+
+template "/home/oracle/.kshrc" do
   action :create_if_missing
   source 'ora_profile.erb'
   owner 'oracle'

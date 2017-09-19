@@ -9,10 +9,12 @@ provisioner:
 # default verifier)
 verifier:
    name: inspec
+   sudo: true
+   sudo_options: "-u oracle"
 
 platforms:
   - name: centos-6.9
-  - name: centos-7.3
+  #- name: centos-7.3
     driver:
       network:
         - ["private_network", {ip: "192.168.33.8"}]

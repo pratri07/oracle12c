@@ -39,6 +39,7 @@ bash "dbca_createdb_#{db}" do
     type sqlplus
     "#{node[:oracle][:rdbms][:ora_home]}/bin"/sqlplus / as sysdba @crdb.sql
   EOH
+  not_if { File.exist?("#{node[:oracle][:rdbms][:ora_home]}/dbs/hc_#{db}.dat") }
 end
 
 #bash 'run_rdbms_installer' do

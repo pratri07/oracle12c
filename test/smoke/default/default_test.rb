@@ -5,15 +5,7 @@
 # The Inspec reference, with examples and extensive documentation, can be
 # found at http://inspec.io/docs/reference/resources/
 
-unless os.windows?
-  # This is an example test, replace with your own test.
-  describe user('root'), :skip do
-    it { should exist }
-  end
-end
-
-# This is an example test, replace it with your own test.
-describe port(80), :skip do
+describe port(1521) do
   it { should_not be_listening }
 end
 
@@ -26,4 +18,21 @@ end
 describe file('/u01/orainv') do
     it { should be_directory }
     it { should be_owned_by 'oracle' }
+end
+
+describe kernel_parameter('kernel.shmmax') do
+  its('value') { should eq 4294967295 }
+end
+
+describe grub_conf('/etc/grub.conf',  'default') do
+  its('kernel') { should include 'transparent_hugepage=never' }
+end
+
+describe file('/etc/grub_conf') do
+  its('content') { should match /transparent_hugepage=never/ }
+end
+
+describe bash('ls -al /u01/db12201/bin') do
+  its('stdout') { should match /sqlplus/ }
+  its('exit_status') { should eq 0 }
 end

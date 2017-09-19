@@ -31,6 +31,6 @@ default[:oracle][:rdbms][:dbsnmp_pw] = 'Change#43RRR2212'
 
 default[:oracle][:rdbms][:db_create_template] = 'default_template.dbt'
 
-default[:oracle][:rdbms][:dbs] = 'voltdb'
+default[:oracle][:rdbms][:dbs] = 'chkdb'
 
 default[:oracle][:rdbms][:dbs_root] = "/oradata"
