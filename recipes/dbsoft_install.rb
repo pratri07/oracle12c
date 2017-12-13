@@ -11,8 +11,16 @@ end
 
 yum_package 'unzip'
 
+#remote_file '/u01/oracle/install_dir/linuxx64_12201_database.zip' do
+#  source 'http://192.168.33.1/orasoft/linuxx64_12201_database.zip'
+#  owner 'oracle'
+#  group 'dba'
+#  action :create
+#end
+
+### enable this for AWS S3
 remote_file '/u01/oracle/install_dir/linuxx64_12201_database.zip' do
-  source 'http://10.0.0.231/orasoft/linuxx64_12201_database.zip'
+  source 'https://s3.us-east-2.amazonaws.com/atriproracle/linuxx64_12201_database.zip'
   owner 'oracle'
   group 'dba'
   action :create
@@ -35,6 +43,13 @@ end
   end
 
 #end
+execute "remove_oracle_media" do
+  command "rm -rf linuxx64_12201_database.zip"
+  user 'oracle'
+  group 'dba'
+  cwd node[:oracle][:rdbms][:install_dir]
+end
+
 
 file "#{node[:oracle][:ora_base]}/oraInst.loc" do
    owner "oracle"
