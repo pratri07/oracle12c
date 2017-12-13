@@ -6,10 +6,10 @@ default[:oracle][:ora_base_fs] = '/u01'
 default[:oracle][:ora_base] = "#{node[:oracle][:ora_base_fs]}/oracle"
 default[:oracle][:rdbms][:ora_home] = "#{node[:oracle][:ora_base_fs]}/db12201"
 
-default[:oracle][:rdbms][:deps_12c] = ['binutils.x86_64', 'compat-libcap1.x86_64', 'gcc.x86_64', 'gcc-c++.x86_64', 'glibc.i686', 'glibc.x86_64',
+default[:oracle][:rdbms][:deps_12c] = ['binutils.x86_64', 'compat-libcap1.x86_64','compat-libcap1.i686', 'gcc.x86_64', 'gcc-c++.x86_64', 'glibc.i686', 'glibc.x86_64',
 'glibc-devel.i686', 'glibc-devel.x86_64', 'ksh', 'compat-libstdc++-33', 'libaio.i686', 'libaio.x86_64', 'libaio-devel.i686', 'libaio-devel.x86_64',
-'libgcc.i686', 'libgcc.x86_64', 'libstdc++.i686', 'libstdc++.x86_64', 'libstdc++-devel.i686', 'libstdc++-devel.x86_64', 'libXi.i686', 'libXi.x86_64',
-'libXtst.i686', 'libXtst.x86_64', 'make.x86_64', 'sysstat.x86_64']
+'libgcc.i686', 'libgcc.x86_64', 'libstdc++.i686', 'libstdc++.x86_64', 'libstdc++-devel.i686', 'libstdc++-devel.x86_64', 'libxcb',
+'libXtst', 'make.x86_64', 'sysstat.x86_64','libX11','libXau','smartmontools','libXi']
 
 default[:oracle][:ora_inventory] = '/u01/orainv'
 
