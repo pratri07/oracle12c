@@ -13,7 +13,8 @@ verifier:
    sudo_options: "-u oracle"
 
 platforms:
-  - name: centos-6.9
+#  - name: centos-6.9
+  - name: centos-7.3
   #- name: centos-7.3
     driver:
       network:
@@ -24,7 +25,8 @@ suites:
     driver:
         vm_hostname: chefd.local.com
     run_list:
-      - recipe[oracle::default]
+      - recipe[oracle::deps_install]
+      #- recipe[oracle::default
     verifier:
        inspec_tests:
           - test/smoke/default
