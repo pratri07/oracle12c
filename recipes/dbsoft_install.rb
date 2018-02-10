@@ -86,3 +86,9 @@ execute 'root.sh_rdbms' do
     COMMAND
     not_if { File.exist?(oracle_install_flag_file) }
 end
+
+template "#{node[:oracle][:rdbms][:ora_home]}/network/admin/listener.ora" do
+  source 'listener.erb'
+  owner 'oracle'
+  group 'dba'
+end
