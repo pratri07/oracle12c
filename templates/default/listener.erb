@@ -1,0 +1,11 @@
+LISTENER =
+  (ADDRESS_LIST=
+  	(ADDRESS=(PROTOCOL=tcp)(HOST=<%= node['fqdn'] %>)(PORT=1521)))
+
+SID_LIST_LISTENER =
+  (SID_LIST =
+    (SID_DESC =
+      (ORACLE_HOME= <%= node[:oracle][:rdbms][:ora_home] %>)
+      (SID_NAME = <%= node[:oracle][:rdbms][:dbs] %>)
+    )
+  )
