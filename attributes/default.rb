@@ -1,8 +1,9 @@
 default[:oracle][:user][:uid] = 201
 default[:oracle][:user][:gid] = 201
-default[:oracle][:user][:shell] = '/bin/ksh'
+default[:oracle][:user][:shell] = '/bin/bash'
 
 default[:oracle][:ora_base_fs] = '/u01'
+default[:oracle][:orahomescripts] = '/home/oracle/scripts'
 default[:oracle][:ora_base] = "#{node[:oracle][:ora_base_fs]}/oracle"
 default[:oracle][:rdbms][:ora_home] = "#{node[:oracle][:ora_base_fs]}/db12201"
 
@@ -34,3 +35,5 @@ default[:oracle][:rdbms][:db_create_template] = 'default_template.dbt'
 default[:oracle][:rdbms][:dbs] = 'chkdb'
 
 default[:oracle][:rdbms][:dbs_root] = "/oradata"
+
+default[:oracle][:hostname] = `hostname -f`
