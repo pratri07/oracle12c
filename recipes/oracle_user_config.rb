@@ -20,10 +20,23 @@ yum_package File.basename(node[:oracle][:user][:shell])
 #  group 'dba'
 #end
 
-template "/home/oracle/.kshrc" do
+template "/home/oracle/.bash_profile" do
   source 'ora_profile.erb'
   owner 'oracle'
   group 'dba'
+end
+
+template "/etc/oratab" do
+  source 'oratab.erb'
+end
+
+template "/etc/init.d/dbora" do
+  source 'dbora.erb'
+  mode '0750'
+end
+
+execute "Add chkconfig" do
+  command "chkconfig --add dbora"
 end
 
 cookbook_file '/etc/security/limits.d/oracle.conf' do
@@ -31,14 +44,35 @@ cookbook_file '/etc/security/limits.d/oracle.conf' do
   source 'ora_limits'
 end
 
-execute "swap1" do
-  command "dd if=/dev/zero of=/var/myswap bs=1M count=600"
+#execute "swap1" do
+#  command "dd if=/dev/zero of=/var/myswap bs=1M count=600"
+#end
+
+#execute "swap2" do
+#  command "mkswap /var/myswap"
+#end
+
+#execute "swap3" do
+#  command "swapon /var/myswap"
+#end
+
+script 'create swapfile' do
+  interpreter 'bash'
+  not_if { File.exists?('/var/swapfile') }
+  code <<-eof
+    dd if=/dev/zero of=/var/swapfile bs=1M count=600 &&
+    chmod 600 /var/swapfile &&
+    mkswap /var/swapfile
+  eof
 end
 
-execute "swap2" do
-  command "mkswap /var/myswap"
+mount '/dev/null' do  # swap file entry for fstab
+  action :enable  # cannot mount; only add to fstab
+  device '/var/swapfile'
+  fstype 'swap'
 end
 
-execute "swap3" do
-  command "swapon /var/myswap"
+script 'activate swap' do
+  interpreter 'bash'
+  code 'swapon -a'
 end
