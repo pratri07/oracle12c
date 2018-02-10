@@ -61,3 +61,14 @@ end
 #  COMMAND
 #  action :run
 #end
+
+bash "bash listener testing" do
+  user "oracle"
+  group "dba"
+  environment (node[:oracle][:rdbms][:env_12c])
+  cwd "#{node[:oracle][:rdbms][:ora_home]}/bin"
+  code <<-EOH
+    export ORACLE_HOME="#{node[:oracle][:rdbms][:ora_home]}"
+    "#{node[:oracle][:rdbms][:ora_home]}/bin"/lsnrctl start
+  EOH
+end
