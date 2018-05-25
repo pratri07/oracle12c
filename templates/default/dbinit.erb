@@ -1,6 +1,6 @@
-db_name = '<%= node[:oracle][:rdbms][:dbs] %>'
+db_name = '<%= @db_name %>'
 db_files = 1024 # INITIAL
-control_files = ("/oradata/<%= node[:oracle][:rdbms][:dbs] %>/control01.ctl")
+control_files = ("/oradata/<%= @db_name %>/control01.ctl")
 log_checkpoint_interval = 10000
 log_checkpoint_timeout = 1800
 processes = 59 # INITIAL

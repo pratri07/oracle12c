@@ -1,4 +1,7 @@
-db = node[:oracle][:rdbms][:dbs]
+dbt = data_bag_item('oradb', 'test')
+db = dbt['ec2-52-15-229-85.us-east-2.compute.amazonaws.com']['dbs']
+
+#db = node[:oracle][:rdbms][:dbs]
 
 directory node[:oracle][:rdbms][:dbs_root] do
   owner 'oracle'
@@ -19,6 +22,7 @@ template "#{node[:oracle][:rdbms][:ora_home]}/dbs/init#{db}.ora" do
   owner 'oracle'
   group 'dba'
   mode '0644'
+  variables(db_name: db)
 end
 
 template "#{node[:oracle][:rdbms][:ora_home]}/dbs/crdb.sql" do
@@ -26,6 +30,7 @@ template "#{node[:oracle][:rdbms][:ora_home]}/dbs/crdb.sql" do
   owner 'oracle'
   group 'dba'
   mode '0644'
+  variables(db_name: db)
 end
 
 bash "dbca_createdb_#{db}" do
@@ -62,13 +67,13 @@ end
 #  action :run
 #end
 
-bash "bash listener testing" do
-  user "oracle"
-  group "dba"
-  environment (node[:oracle][:rdbms][:env_12c])
-  cwd "#{node[:oracle][:rdbms][:ora_home]}/bin"
-  code <<-EOH
-    export ORACLE_HOME="#{node[:oracle][:rdbms][:ora_home]}"
-    "#{node[:oracle][:rdbms][:ora_home]}/bin"/lsnrctl start
-  EOH
-end
+#bash "bash listener testing" do
+#  user "oracle"
+#  group "dba"
+#  environment (node[:oracle][:rdbms][:env_12c])
+#  cwd "#{node[:oracle][:rdbms][:ora_home]}/bin"
+#  code <<-EOH
+#    export ORACLE_HOME="#{node[:oracle][:rdbms][:ora_home]}"
+#    "#{node[:oracle][:rdbms][:ora_home]}/bin"/lsnrctl start
+#  EOH
+#end
